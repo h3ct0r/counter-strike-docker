@@ -12,6 +12,7 @@
 ### Create a server token with your steam user
 
 Login and create a token at:  https://steamcommunity.com/dev/managegameservers
+This token is not *mandatory*, but using it will enable adding your server to the Steam server list so others can join and play without too much hazzle.
 
 ### Port forwarding (If going to play outside of your LAN using internet)
 
