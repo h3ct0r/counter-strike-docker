@@ -23,7 +23,7 @@ This token is not *mandatory*, but using it will enable adding your server to th
 ### Create and start new Counter-Strike 1.6 server:
 
 ```
-$ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAXPLAYERS=16 -e START_MAP=de_dust2 -e ADMIN_STEAM={YOUR_STEAM_ID} -e SERVER_NAME="{YOUR_GAME_SERVER_NAME}" --name cs counter_strike_16:latest +sv_setsteamaccount {YOUR_SERVER_TOKEN} +sv_password {YOUR_GAME_PASSWORD} +rcon_password {YOUR_REMOTE_COMMAND_PASSWORD}
+$ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAXPLAYERS=16 -e START_MAP=de_dust2 -e ADMIN_STEAM={YOUR_STEAM_ID} -e SERVER_NAME="{YOUR_GAME_SERVER_NAME}" --name cs counter_strike_16:latest +sv_setsteamaccount {YOUR_SERVER_TOKEN} +sv_password {YOUR_GAME_PASSWORD} +rcon_password {YOUR_REMOTE_COMMAND_PASSWORD} +sv_lan 0
 ```
 
 - **MAXPLAYERS** : maximum number of players for this game session.
@@ -33,6 +33,7 @@ $ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAX
 - **+sv_setsteamaccount** : the token from the developer server account. This in theory allows this server to be displayed into the server list in Steam. It is recommended from the Steam tutorial, but dont know if this is obligatory.
 - **+sv_password** : the password of your game session. The users will need to set this password to enter the game.
 - **+rcon_password** : the remote administrator password for this game instance. The RCON command list can be seen in https://github.com/h3ct0r/counter-strike-docker/wiki/RCON-Commands
+- **+sv_lan**: allow remote conections outside your LAN
 
 ### Stop the server:
 
@@ -76,7 +77,7 @@ pb menu
 ### Use image from [Docker Hub](https://hub.docker.com/r/h3ct0rxxx/counter_strike_16):
 
 ```
- $ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAXPLAYERS=16 -e START_MAP=de_dust2 -e ADMIN_STEAM=YOUR_ADMIN_STEAM_ID -e SERVER_NAME="TEST SERVER DE_DUST2 ROLF" --name cs h3ct0rxxx/counter_strike_16:latest +sv_setsteamaccount YOUR_STEAM_TOKEN_ID +sv_password YOUR_GAME_PASSWORD +rcon_password YOUR_RCON_PASSWORD +log
+ $ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAXPLAYERS=16 -e START_MAP=de_dust2 -e ADMIN_STEAM=YOUR_ADMIN_STEAM_ID -e SERVER_NAME="TEST SERVER DE_DUST2 ROLF" --name cs h3ct0rxxx/counter_strike_16:latest +sv_setsteamaccount YOUR_STEAM_TOKEN_ID +sv_password YOUR_GAME_PASSWORD +rcon_password YOUR_RCON_PASSWORD +sv_lan 0 +log 
 ```
 
 ### Todos
