@@ -72,10 +72,10 @@ Then activate the podbot menu:
 pb menu
 ```
 
-### Use image from [Docker Hub](https://hub.docker.com/r/hlds/server/):
+### Use image from [Docker Hub](https://hub.docker.com/r/h3ct0rxxx/counter_strike_16):
 
 ```
- $ docker run -d -p 27020:27015/udp -e START_MAP=de_inferno -e ADMIN_STEAM=0:1:1234566 -e SERVER_NAME="My Server" --name cs hlds/server:alpha +log
+ $ docker run -d -p 27005-27020:27005-27020/udp -p 27005-27020:27005-27020 -e MAXPLAYERS=16 -e START_MAP=de_dust2 -e ADMIN_STEAM=YOUR_ADMIN_STEAM_ID -e SERVER_NAME="TEST SERVER DE_DUST2 ROLF" --name cs h3ct0rxxx/counter_strike_16:latest +sv_setsteamaccount YOUR_STEAM_TOKEN_ID +sv_password YOUR_GAME_PASSWORD +rcon_password YOUR_RCON_PASSWORD +log
 ```
 
 ### Todos
