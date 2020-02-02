@@ -1,0 +1,17 @@
+sound/misc/kenny1.wav
+sound/misc/cracker1.wav
+sound/misc/shot1.wav
+sound/misc/revenge1.wav
+sound/misc/doh.wav
+sound/misc/nam1.wav
+sound/misc/kickass1.wav
+sound/misc/big1.wav
+sound/misc/cheesy1.wav
+sound/misc/scared1.wav
+sound/misc/ho1.wav
+sound/misc/bleeeat.wav
+sound/misc/brawwrr.wav
+sound/misc/ooorgle.wav
+sound/misc/force.wav
+sound/misc/theone.wav
+maps/de_dust.res

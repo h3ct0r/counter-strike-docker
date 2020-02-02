@@ -1,25 +1,25 @@
 FROM debian:jessie
 
-LABEL maintainer "Artem Panchenko <kazar.artem@gmail.com>"
+LABEL maintainer "h3ct0r <hector@azpurua.me>"
 
 ARG steam_user=anonymous
 ARG steam_password=
 ARG metamod_version=1.20
 ARG amxmod_version=1.8.2
 
-RUN apt update && apt install -y lib32gcc1 curl
+RUN apt-get update && apt-get install -y lib32gcc1 curl vim nano less net-tools lib32stdc++6 unzip
 
 # Install SteamCMD
 RUN mkdir -p /opt/steam && cd /opt/steam && \
     curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
 # Install HLDS
+# Tutorial https://steamcommunity.com/sharedfiles/filedetails/?id=1681186824
 RUN mkdir -p /opt/hlds
 # Workaround for "app_update 90" bug, see https://forums.alliedmods.net/showthread.php?p=2518786
-RUN /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 90 validate +quit
+RUN /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 90 validate +quit || \ 
+    /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 90 validate +quit
 RUN /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 70 validate +quit || :
-RUN /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 10 validate +quit || :
-RUN /opt/steam/steamcmd.sh +login $steam_user $steam_password +force_install_dir /opt/hlds +app_update 90 validate +quit
 RUN mkdir -p ~/.steam && ln -s /opt/hlds ~/.steam/sdk32
 RUN ln -s /opt/steam/ /opt/hlds/steamcmd
 ADD files/steam_appid.txt /opt/hlds/steam_appid.txt
@@ -48,9 +48,19 @@ ADD files/dproto.cfg /opt/hlds/cstrike/dproto.cfg
 RUN curl -sqL "http://www.amxmodx.org/release/amxmodx-$amxmod_version-base-linux.tar.gz" | tar -C /opt/hlds/cstrike/ -zxvf -
 RUN curl -sqL "http://www.amxmodx.org/release/amxmodx-$amxmod_version-cstrike-linux.tar.gz" | tar -C /opt/hlds/cstrike/ -zxvf -
 ADD files/maps.ini /opt/hlds/cstrike/addons/amxmodx/configs/maps.ini
+# Install bullet damage
+# https://forums.alliedmods.net/showthread.php?t=88577
+ADD files/advanded_bullet_damage.amxx /opt/hlds/cstrike/addons/amxmodx/plugins/advanded_bullet_damage.amxx
+RUN echo "advanded_bullet_damage.amxx" >> /opt/hlds/cstrike/addons/amxmodx/configs/plugins.ini
+
+# Install podbot
+# https://forums.alliedmods.net/showthread.php?t=220798
+# using i386 version
+ADD files/podbot_full_V3B22.zip /opt/hlds/cstrike/addons/podbot_full_V3B22.zip
+RUN unzip /opt/hlds/cstrike/addons/podbot_full_V3B22.zip -d /opt/hlds/cstrike/addons/ && rm /opt/hlds/cstrike/addons/podbot_full_V3B22.zip
 
 # Cleanup
-RUN apt remove -y curl
+RUN apt-get remove -y curl
 
 WORKDIR /opt/hlds
 
